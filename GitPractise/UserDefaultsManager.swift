@@ -20,6 +20,10 @@ class UserDefaultsManager {
     private let userKey = "key"
     private let secondKey = "SecondKey"
     
+    func getData() {
+        
+    }
+    
     func saveNote(note: String) {
         var notes = getNote()
         notes.append(note)
