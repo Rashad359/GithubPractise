@@ -15,6 +15,7 @@ class ViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Write your note that is in your mind"
+        textField.backgroundColor = .systemGray
         return textField
     }()
     
