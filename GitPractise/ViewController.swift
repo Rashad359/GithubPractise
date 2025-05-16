@@ -54,9 +54,10 @@ class ViewController: UIViewController {
     
     @objc private func addTapped() {
         let vc = SecondViewController()
-        let note = userDefaults.getNote() ?? "No note"
-        print(note)
-        vc.notesList.append(note)
+//        let note = userDefaults.getNote() ?? "No note"
+//        print(note)
+        let notes = userDefaults.getNote()
+        vc.notesList = notes
         navigationController?.pushViewController(vc, animated: true)
     }
     
