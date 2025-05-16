@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     private let noteTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Write your note here"
+        textField.placeholder = "Write your note that is in your mind"
         return textField
     }()
     
