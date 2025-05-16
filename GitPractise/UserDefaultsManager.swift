@@ -18,6 +18,7 @@ class UserDefaultsManager {
     }
     
     private let userKey = "key"
+    private let secondKey = "SecondKey"
     
     func saveNote(note: String) {
         userDefautls.set(note, forKey: userKey)
