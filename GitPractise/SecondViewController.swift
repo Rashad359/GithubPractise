@@ -23,6 +23,7 @@ class SecondViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
+        tableView.reloadData()
     }
     
     private func setupUI() {

@@ -20,10 +20,12 @@ class UserDefaultsManager {
     private let userKey = "key"
     
     func saveNote(note: String) {
-        userDefautls.set(note, forKey: userKey)
+        var notes = getNote()
+        notes.append(note)
+        userDefautls.set(notes, forKey: userKey)
     }
     
-    func getNote() -> String? {
-        return userDefautls.string(forKey: userKey)
+    func getNote() -> [String] {
+        return userDefautls.stringArray(forKey: userKey) ?? []
     }
 }
