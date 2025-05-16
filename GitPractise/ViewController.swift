@@ -23,6 +23,7 @@ class ViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Submit", for: .normal)
         button.setTitleColor(.link, for: .normal)
+        button.backgroundColor = .systemCyan
         return button
     }()
 
