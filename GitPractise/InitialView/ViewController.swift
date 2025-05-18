@@ -7,9 +7,19 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
+
+    private let viewModel: ViewModel
     
-    private let userDefaults = UserDefaultsManager.shared
+    init(viewModel: ViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private let noteTextField: UITextField = {
         let textField = UITextField()
@@ -44,7 +54,10 @@ class ViewController: UIViewController {
         let alert = UIAlertController(title: "Success", message: "Note is added to your note list", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(alert, animated: true)
-        userDefaults.saveNote(note: noteTextField.text ?? "Couldn't save the note")
+        
+        var notes = viewModel.getNote()
+        notes.append(.init(note: noteTextField.text ?? "Couldn't save the note", date: "\(Date.now)"))
+        viewModel.saveNote(note: notes)
         noteTextField.text = ""
     }
     
@@ -54,11 +67,7 @@ class ViewController: UIViewController {
     }
     
     @objc private func addTapped() {
-        let vc = SecondViewController()
-//        let note = userDefaults.getNote() ?? "No note"
-//        print(note)
-        let notes = userDefaults.getNote()
-        vc.notesList = notes
+        let vc = SecondViewBuilder().build()
         navigationController?.pushViewController(vc, animated: true)
     }
     
