@@ -14,7 +14,8 @@ class ViewController: UIViewController {
     private let noteTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Write your note here"
+        textField.placeholder = "Write your note that is in your mind"
+        textField.backgroundColor = .systemGray
         return textField
     }()
     
@@ -22,7 +23,7 @@ class ViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Submit", for: .normal)
-        button.setTitleColor(.link, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .systemCyan
         return button
     }()
