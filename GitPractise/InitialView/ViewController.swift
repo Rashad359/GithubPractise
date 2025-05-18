@@ -25,16 +25,22 @@ final class ViewController: UIViewController {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Write your note that is in your mind"
-        textField.backgroundColor = .systemGray
+        textField.backgroundColor = .systemGray6
+        textField.autocapitalizationType = .none
+        textField.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        textField.layer.cornerRadius = 12
         return textField
     }()
     
     private let submitButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Submit", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .systemCyan
+        button.layer.cornerRadius = 12
+        button.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         return button
     }()
 
@@ -56,7 +62,7 @@ final class ViewController: UIViewController {
         present(alert, animated: true)
         
         var notes = viewModel.getNote()
-        notes.append(.init(note: noteTextField.text ?? "Couldn't save the note", date: "\(Date.now)"))
+        notes.append(.init(note: noteTextField.text ?? "Couldn't save the note", date: "\(getCurrentDate())"))
         viewModel.saveNote(note: notes)
         noteTextField.text = ""
     }
