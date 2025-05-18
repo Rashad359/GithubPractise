@@ -7,14 +7,26 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
-    private let userDefaults = UserDefaultsManager.shared
+//    private let userDefaults = UserDefaultsManager.shared
+    private let viewModel: ViewModel
+    
+    init(viewModel: ViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private let noteTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Write your note here"
+        textField.autocapitalizationType = .none
         return textField
     }()
     
@@ -43,7 +55,14 @@ class ViewController: UIViewController {
         let alert = UIAlertController(title: "Success", message: "Note is added to your note list", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(alert, animated: true)
-        userDefaults.saveNote(note: noteTextField.text ?? "Couldn't save the note")
+        
+//        viewModel.saveNote(note: [
+//            .init(note: noteTextField.text ?? "Couldn't save the note", date: "\(Date.now)")
+//        ])
+        
+        var notes = viewModel.getNote()
+        notes.append(.init(note: noteTextField.text ?? "Couldn't save the note", date: "\(Date.now)"))
+        viewModel.saveNote(note: notes)
         noteTextField.text = ""
     }
     
@@ -53,11 +72,7 @@ class ViewController: UIViewController {
     }
     
     @objc private func addTapped() {
-        let vc = SecondViewController()
-//        let note = userDefaults.getNote() ?? "No note"
-//        print(note)
-        let notes = userDefaults.getNote()
-        vc.notesList = notes
+        let vc = SecondViewBuilder().build()
         navigationController?.pushViewController(vc, animated: true)
     }
     

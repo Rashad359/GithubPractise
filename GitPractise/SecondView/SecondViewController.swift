@@ -7,9 +7,20 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
+final class SecondViewController: UIViewController {
     
-    var notesList: [String] = []
+    private let viewModel: SecondViewModel
+    
+    init(viewModel: SecondViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private var notesList: [NoteModel] = []
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -23,6 +34,7 @@ class SecondViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
+        notesList = viewModel.getNote()
         tableView.reloadData()
     }
     
@@ -47,8 +59,23 @@ extension SecondViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = notesList[indexPath.row]
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+        cell.textLabel?.text = notesList[indexPath.row].note
+        cell.detailTextLabel?.text = notesList[indexPath.row].date
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
+            self.notesList.remove(at: indexPath.row)
+            
+            self.viewModel.saveNote(note: self.notesList)
+            
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        
+        let swipeAction = UISwipeActionsConfiguration(actions: [delete])
+        return swipeAction
     }
 }
