@@ -79,6 +79,7 @@ extension SecondViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let alert = UIAlertController(title: "Do you want to change your note?", message: "Type your note here", preferredStyle: .alert)
         alert.addTextField()
         alert.textFields?.first?.text = notesList[indexPath.row].note
