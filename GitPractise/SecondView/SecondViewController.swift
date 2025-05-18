@@ -11,6 +11,8 @@ final class SecondViewController: UIViewController {
     
     private let viewModel: SecondViewModel
     
+    private var notesList: [NoteModel] = []
+    
     init(viewModel: SecondViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -19,8 +21,6 @@ final class SecondViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private var notesList: [NoteModel] = []
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -77,5 +77,23 @@ extension SecondViewController: UITableViewDataSource, UITableViewDelegate {
         
         let swipeAction = UISwipeActionsConfiguration(actions: [delete])
         return swipeAction
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let alert = UIAlertController(title: "Do you want to change your note?", message: "Type your note here", preferredStyle: .alert)
+        alert.addTextField()
+        alert.textFields?.first?.text = notesList[indexPath.row].note
+        let confirm = UIAlertAction(title: "Confirm", style: .default) { _ in
+            self.notesList[indexPath.row].note = alert.textFields?.first?.text ?? "Nothing is added"
+            self.notesList[indexPath.row].date = "\(self.getCurrentDate())"
+            self.viewModel.saveNote(note: self.notesList)
+            self.tableView.reloadData()
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .destructive)
+//        alert.addAction(cancel)
+//        alert.addAction(confirm)
+        [cancel, confirm].forEach(alert.addAction)
+        self.present(alert, animated: true)
     }
 }
