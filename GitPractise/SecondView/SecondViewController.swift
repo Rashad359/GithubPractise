@@ -59,7 +59,6 @@ extension SecondViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         cell.textLabel?.text = notesList[indexPath.row].note
         cell.detailTextLabel?.text = notesList[indexPath.row].date
@@ -91,8 +90,6 @@ extension SecondViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         let cancel = UIAlertAction(title: "Cancel", style: .destructive)
-//        alert.addAction(cancel)
-//        alert.addAction(confirm)
         [cancel, confirm].forEach(alert.addAction)
         self.present(alert, animated: true)
     }

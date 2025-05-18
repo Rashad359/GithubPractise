@@ -8,8 +8,7 @@
 import UIKit
 
 final class ViewController: UIViewController {
-    
-//    private let userDefaults = UserDefaultsManager.shared
+
     private let viewModel: ViewModel
     
     init(viewModel: ViewModel) {
@@ -55,10 +54,6 @@ final class ViewController: UIViewController {
         let alert = UIAlertController(title: "Success", message: "Note is added to your note list", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(alert, animated: true)
-        
-//        viewModel.saveNote(note: [
-//            .init(note: noteTextField.text ?? "Couldn't save the note", date: "\(Date.now)")
-//        ])
         
         var notes = viewModel.getNote()
         notes.append(.init(note: noteTextField.text ?? "Couldn't save the note", date: "\(Date.now)"))
